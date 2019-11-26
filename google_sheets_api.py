@@ -49,7 +49,7 @@ class GoogleSheetsApi():
         """Appending googlesheets values
 
         :param range_name: sheet and range
-        :param value_input_option: raw or user_enterede
+        :param value_input_option: RAW or USER_ENTERED
         :param values: the values to append
 
         """

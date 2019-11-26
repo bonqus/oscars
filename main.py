@@ -52,13 +52,16 @@ for movie_id in MOVIE_IDS:
     DATA_USERS_RATINGS = []
     for user_rating in USERS_RATINGS:
         if movie_id in user_rating:
-            DATA_USERS_RATINGS.append(user_rating[movie_id])
+            DATA_USERS_RATINGS.append('=HYPERLINK("{}","YTS")'.format(
+                user_rating[movie_id]))
         else:
             DATA_USERS_RATINGS.append('')
 
     DATA.append([
         omdb_result['Title'],
         omdb_result['Released'],
+        yts_data,
+        len(rarbg_result) > 0,
         omdb_result['Runtime'],
         omdb_result['Genre'],
         omdb_result['Director'],
@@ -68,8 +71,6 @@ for movie_id in MOVIE_IDS:
         omdb_result['Country'],
         omdb_result['Metascore'],
         omdb_result['imdbRating'],
-        yts_data,
-        len(rarbg_result) > 0,
     ] + DATA_USERS_RATINGS)
 
-GSA.append('Movies!B2:B', 'RAW', DATA)
+GSA.append('Movies!B2:B', 'USER_ENTERED', DATA)
