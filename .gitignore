@@ -1,3 +1,8 @@
+# token
+configuration.yaml
+credentials.json
+token.pickle
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
