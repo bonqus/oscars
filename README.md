@@ -3,6 +3,7 @@ A profile scraper and google sheets updater
 
 ## Installation
 `$ git clone https://github.com/mbonus/dragons_hub.git`
+
 `$ cd oscars/`
 
 #### Virtual environment 
@@ -14,10 +15,9 @@ A profile scraper and google sheets updater
 `$ pip install -r requirements.txt`
 
 ##### Create a configuration.yaml file
-```yaml
-spreadsheet_id: '<spreadsheet_id>'
+```$ echo 
+"spreadsheet_id: '<spreadsheet_id>'
 scopes:
   - 'https://www.googleapis.com/auth/spreadsheets'
-omdb_api_key: '<omdb_api_key>'
+omdb_api_key: '<omdb_api_key>'" >> configuration.yaml`
 ```
-
