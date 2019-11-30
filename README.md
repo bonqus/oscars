@@ -15,7 +15,8 @@ A profile scraper and google sheets updater
 `$ pip install -r requirements.txt`
 
 ##### Create a configuration.yaml file
-```$ echo 
+```
+$ echo 
 "spreadsheet_id: '<spreadsheet_id>'
 scopes:
   - 'https://www.googleapis.com/auth/spreadsheets'
