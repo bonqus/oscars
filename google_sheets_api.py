@@ -60,6 +60,21 @@ class GoogleSheetsApi():
             valueInputOption=value_input_option,
             body=body).execute()
 
+    def write(self, range_name, value_input_option, values):
+        """Updating googlesheets values
+
+        :param range_name: sheet and range
+        :param value_input_option: RAW or USER_ENTERED
+        :param values: the values to append
+
+        """
+        body = {'values': values}
+        self.service.spreadsheets().values().update(
+            spreadsheetId=self.spreadsheet_id,
+            range=range_name,
+            valueInputOption=value_input_option,
+            body=body).execute()
+
 
 if __name__ == '__main__':
     import yaml

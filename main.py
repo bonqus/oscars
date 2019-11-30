@@ -38,22 +38,21 @@ for movie_id in MOVIE_IDS:
 
     yts_response = requests.get(YTS_URL, params=YTS_PARAMS)
     yts_result = yts_response.json()
-    yts_data = False
+    yts_data = ''
     if yts_result['data']['movie_count'] > 0:
         try:
-            yts_data = yts_result['data']['movies'][0]['url']
+            yts_data = '=HYPERLINK("{}","YTS")'.format(
+                yts_result['data']['movies'][0]['url'])
         except KeyError:
             print(movie_id)
             print(yts_result['data'])
 
     rarbg = rarbgapi.RarbgAPI()
     rarbg_result = rarbg.search(search_imdb=movie_id)
-
     DATA_USERS_RATINGS = []
     for user_rating in USERS_RATINGS:
         if movie_id in user_rating:
-            DATA_USERS_RATINGS.append('=HYPERLINK("{}","YTS")'.format(
-                user_rating[movie_id]))
+            DATA_USERS_RATINGS.append(user_rating[movie_id])
         else:
             DATA_USERS_RATINGS.append('')
 
@@ -73,4 +72,5 @@ for movie_id in MOVIE_IDS:
         omdb_result['imdbRating'],
     ] + DATA_USERS_RATINGS)
 
-GSA.append('Movies!B2:B', 'USER_ENTERED', DATA)
+# GSA.append('Movies!B2:B', 'USER_ENTERED', DATA)
+GSA.write('Movies!B2:AA', 'USER_ENTERED', DATA)
