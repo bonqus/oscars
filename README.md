@@ -15,7 +15,7 @@ A profile scraper and google sheets updater
 
 ##### Create a configuration.yaml file
 ```yaml
-spreadsheet_id: '<spreadsheet_id>'`
+spreadsheet_id: '<spreadsheet_id>'
 scopes:
   - 'https://www.googleapis.com/auth/spreadsheets'
 omdb_api_key: '<omdb_api_key>'
