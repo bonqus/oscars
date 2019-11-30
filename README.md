@@ -14,8 +14,10 @@ A profile scraper and google sheets updater
 `$ pip install -r requirements.txt`
 
 ##### Create a configuration.yaml file
-`spreadsheet_id: '<spreadsheet_id>'
+```yaml
+spreadsheet_id: '<spreadsheet_id>'`
 scopes:
   - 'https://www.googleapis.com/auth/spreadsheets'
 omdb_api_key: '<omdb_api_key>'
-`
+```
+
