@@ -2,7 +2,7 @@
 A profile scraper and google sheets updater
 
 ## Installation
-`$ git clone https://github.com/mbonus/dragons_hub.git`
+`$ git clone https://github.com/mbonus/oscars.git`
 
 `$ cd oscars/`
 
@@ -22,3 +22,6 @@ scopes:
   - 'https://www.googleapis.com/auth/spreadsheets'
 omdb_api_key: '<omdb_api_key>'" >> configuration.yaml`
 ```
+
+##### Run it
+`$ python main.py`
