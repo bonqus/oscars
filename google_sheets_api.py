@@ -10,6 +10,7 @@ class GoogleSheetsApi():
     ''' Google sheets api helper class
     :param scopes: read / write privligies
     '''
+
     def __init__(self, scopes, spreadsheet_id):
         creds = None
         if os.path.exists('token.pickle'):

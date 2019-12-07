@@ -1,4 +1,3 @@
-'''re is imported for creating a regex, matching all IMDb title ids'''
 import re
 from urllib.request import urlopen
 
@@ -8,7 +7,7 @@ BASE_URL = "https://www.imdb.com/"
 FIRST_PAGE_URL = "user/{}/ratings"
 
 
-def find_rankings(imdb_id):
+def find_rankings(imdb_id, number_of_pages=0):
     '''Scrapes imdb
     to find all the titles and their rankings for an imdb user
     :returns: imdb title ids and the users rating of them
@@ -16,6 +15,7 @@ def find_rankings(imdb_id):
     '''
     movies = {}
     path = FIRST_PAGE_URL.format(imdb_id)
+    page_counter = 1
     while path is not None:
         context = urlopen(BASE_URL + path)
         html = context.read()
@@ -23,6 +23,9 @@ def find_rankings(imdb_id):
         page = BeautifulSoup(html, "html.parser")
         movies = {**movies, **_find_ranked_movies(page)}
         path = _find_next_page(page)
+        if number_of_pages == 0 or number_of_pages == page_counter:
+            break
+        page_counter += 1
     return movies
 
 

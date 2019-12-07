@@ -11,7 +11,7 @@ A profile scraper and google sheets updater
 
 `$ source virt_env/bin/activate`
 
-##### Requirements
+##### Requirements (the requirements are bloated because of linting and such)
 `$ pip install -r requirements.txt`
 
 ##### Create a configuration.yaml file

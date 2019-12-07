@@ -22,6 +22,7 @@ ipython==7.9.0
 ipython-genutils==0.2.0
 isort==4.3.21
 jedi==0.15.1
+json-rpc==1.12.2
 lazy-object-proxy==1.4.3
 mccabe==0.6.1
 more-itertools==7.2.0
@@ -41,7 +42,6 @@ pydocstyle==4.0.1
 pyflakes==2.1.1
 Pygments==2.4.2
 pylint==2.4.4
-pyls==0.1.6
 pyls-isort==0.1.1
 pyls-mypy==0.1.8
 python-jsonrpc-server==0.3.0
@@ -52,6 +52,7 @@ requests==2.22.0
 requests-oauthlib==1.3.0
 rope==0.14.0
 rsa==4.0
+service-factory==0.1.5
 sexpdata==0.0.3
 six==1.13.0
 snowballstemmer==2.0.0
