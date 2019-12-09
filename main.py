@@ -1,3 +1,5 @@
+import argparse
+
 import rarbgapi
 import requests
 import yaml
@@ -5,6 +7,13 @@ from tqdm import tqdm
 
 from google_sheets_api import GoogleSheetsApi
 from imdb_profile_scraper import find_rankings
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-n',
+                    type=int,
+                    default=0,
+                    help='Number of user imdb pages to scan')
+args = parser.parse_args()
 
 with open('configuration.yaml', 'r') as yaml_file:
     CFG = yaml.load(yaml_file, Loader=yaml.FullLoader)
@@ -28,7 +37,7 @@ RARBG_URL = 'https://unblockedrarbg.org/torrents.php?imdb={}&category%5B%5D=14&c
 USERS_RATINGS = []
 print('Scraping user ratings')
 for user_id in tqdm(USER_IDS):
-    USERS_RATINGS.append(find_rankings(user_id))
+    USERS_RATINGS.append(find_rankings(user_id, args.n))
 
 DATA = []
 print('Creating data rows')

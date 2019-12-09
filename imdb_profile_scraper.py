@@ -7,9 +7,11 @@ BASE_URL = "https://www.imdb.com/"
 FIRST_PAGE_URL = "user/{}/ratings"
 
 
-def find_rankings(imdb_id, number_of_pages=0):
+def find_rankings(imdb_id, number_of_pages=1):
     '''Scrapes imdb
     to find all the titles and their rankings for an imdb user
+    :param imdb_id: the imdb user id
+    :param number_of_pages: The number of pages to scrape, 0 for all pages.
     :returns: imdb title ids and the users rating of them
     :rtype: dict
     '''
@@ -23,7 +25,7 @@ def find_rankings(imdb_id, number_of_pages=0):
         page = BeautifulSoup(html, "html.parser")
         movies = {**movies, **_find_ranked_movies(page)}
         path = _find_next_page(page)
-        if number_of_pages == 0 or number_of_pages == page_counter:
+        if number_of_pages == page_counter:
             break
         page_counter += 1
     return movies
