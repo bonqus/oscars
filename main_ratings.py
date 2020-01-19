@@ -1,12 +1,8 @@
-import argparse
-
-import rarbgapi
-import requests
 import yaml
-from tqdm import tqdm
 
 from google_sheets_api import GoogleSheetsApi
 from imdb_profile_scraper import find_rankings
+from tqdm import tqdm
 
 # parser = argparse.ArgumentParser()
 # parser.add_argument('-n',
