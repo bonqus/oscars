@@ -24,4 +24,7 @@ omdb_api_key: '<omdb_api_key>'" >> configuration.yaml`
 ```
 
 ##### Run it
+`$ python imdb_id_finder.py`
+fix missing imdb ids and fix urls manual, imdb_id_finder should be run once against predictions, shortlits or nominations
 `$ python main.py`
+run main everytime you want to update ratings and movie info

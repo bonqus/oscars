@@ -5,15 +5,18 @@ import requests
 import yaml
 from tqdm import tqdm
 
+from clean_util import clean_na, clean_time_col
 from google_sheets_api import GoogleSheetsApi
 from imdb_profile_scraper import find_rankings
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-n',
-                    type=int,
-                    default=0,
-                    help='Number of user imdb pages to scan')
-args = parser.parse_args()
+# parser = argparse.ArgumentParser()
+# parser.add_argument('-n',
+#                     type=int,
+#                     default=0,
+#                     help='Number of user imdb pages to scan')
+# args = parser.parse_args()
+# pages = args.n
+pages = 0
 
 with open('configuration.yaml', 'r') as yaml_file:
     CFG = yaml.load(yaml_file, Loader=yaml.FullLoader)
@@ -26,7 +29,7 @@ SPREADSHEET_ID = CFG['spreadsheet_id']
 GSA = GoogleSheetsApi(SCOPES, SPREADSHEET_ID)
 
 print('Getting movie ids')
-MOVIE_IDS = [movie_id for [movie_id] in GSA.read('Movies!A2:A')]
+MOVIE_IDS = [movie_id for [movie_id] in GSA.read('Overview!A2:A')]
 print('Getting user ids')
 USER_IDS = [user_id for [user_id] in GSA.read('Users!B2:B')]
 
@@ -37,7 +40,7 @@ RARBG_URL = 'https://unblockedrarbg.org/torrents.php?imdb={}&category%5B%5D=14&c
 USERS_RATINGS = []
 print('Scraping user ratings')
 for user_id in tqdm(USER_IDS):
-    USERS_RATINGS.append(find_rankings(user_id, args.n))
+    USERS_RATINGS.append(find_rankings(user_id, pages))
 
 DATA = []
 print('Creating data rows')
@@ -63,7 +66,13 @@ for movie_id in tqdm(MOVIE_IDS):
             print(yts_result['data'])
 
     rarbg = rarbgapi.RarbgAPI()
-    rarbg_result = rarbg.search(search_imdb=movie_id)
+    rarbg_result = []
+    try:
+        rarbg_result = rarbg.search(search_imdb=movie_id)
+    except:
+        pass
+    # except ValueError:
+    #     print("Rarbgapi error on id: " + movie_id)
 
     rarbg_data = ''
     if len(rarbg_result) > 0 or rarbg_result:
@@ -76,23 +85,38 @@ for movie_id in tqdm(MOVIE_IDS):
             DATA_USERS_RATINGS.append(user_rating[movie_id])
         else:
             DATA_USERS_RATINGS.append('')
+    try:
+        DATA.append([
+            yts_data,
+            rarbg_data,
+            clean_na(omdb_result['Released']),
+            clean_time_col(omdb_result['Runtime']),
+            clean_na(omdb_result['Genre']),
+            omdb_result['Director'],
+            omdb_result['Writer'],
+            omdb_result['Plot'],
+            clean_na(omdb_result['Language']),
+            clean_na(omdb_result['Country']),
+            clean_na(omdb_result['Metascore']),
+            clean_na(omdb_result['imdbRating']),
+        ] + DATA_USERS_RATINGS)
+    except KeyError:
+        DATA.append([
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+        ] + DATA_USERS_RATINGS)
 
-    DATA.append([
-        '=HYPERLINK("https://www.imdb.com/title/{}","{}")'.format(
-            movie_id, omdb_result['Title']),
-        omdb_result['Released'],
-        yts_data,
-        rarbg_data,
-        omdb_result['Runtime'],
-        omdb_result['Genre'],
-        omdb_result['Director'],
-        omdb_result['Writer'],
-        omdb_result['Plot'],
-        omdb_result['Language'],
-        omdb_result['Country'],
-        omdb_result['Metascore'],
-        omdb_result['imdbRating'],
-    ] + DATA_USERS_RATINGS)
 
 # GSA.append('Movies!B2:B', 'USER_ENTERED', DATA)
-GSA.write('Movies!B2:AA', 'USER_ENTERED', DATA)
+GSA = GoogleSheetsApi(SCOPES, SPREADSHEET_ID)
+GSA.write('Overview!F2:AZ', 'USER_ENTERED', DATA)
