@@ -40,7 +40,7 @@ pyasn1-modules==0.2.7
 pycodestyle==2.5.0
 pydocstyle==4.0.1
 pyflakes==2.1.1
-Pygments==2.4.2
+Pygments==2.7.4
 pylint==2.4.4
 pyls-isort==0.1.1
 pyls-mypy==0.1.8
