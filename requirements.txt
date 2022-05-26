@@ -60,7 +60,7 @@ soupsieve==1.9.5
 traitlets==4.3.3
 typed-ast==1.4.0
 typing-extensions==3.7.4.1
-ujson==1.35
+ujson==5.2.0
 uritemplate==3.0.0
 urllib3==1.25.7
 wcwidth==0.1.7
